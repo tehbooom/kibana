@@ -22,13 +22,12 @@ import memoizeOne from 'memoize-one';
 import React, { useCallback, useEffect, useMemo, useContext, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-// eslint-disable-next-line @kbn/eslint/module_migration
 import styled, { ThemeContext } from 'styled-components';
 import type { Filter } from '@kbn/es-query';
 import type { EuiTheme } from '@kbn/kibana-react-plugin/common';
 import type { FieldBrowserOptions } from '@kbn/triggers-actions-ui-plugin/public';
 import { i18n } from '@kbn/i18n';
-import { BrowserFields } from '@kbn/timelines-plugin/common';
+import { BrowserFields, TimelineItem } from '@kbn/timelines-plugin/common';
 import type { BulkActionsProp, DataTableCellAction } from '../types';
 import type { CellValueElementProps, ColumnHeaderOptions, RowRenderer } from '../types';
 
@@ -57,7 +56,7 @@ export interface DataTableProps {
   additionalControls?: React.ReactNode;
   browserFields: BrowserFields;
   bulkActions?: BulkActionsProp;
-  data: any[];
+  data: TimelineItem[];
   defaultCellActions?: DataTableCellAction[];
   disabledCellActions: string[];
   fieldBrowserOptions?: FieldBrowserOptions;
@@ -426,7 +425,7 @@ export const DataTableComponent = React.memo<DataTableProps>(
         <EuiDataGridContainer hideLastPage={totalItems > ES_LIMIT_COUNT}>
           <EuiDataGrid
             id={'body-data-grid'}
-            data-test-subj="body-data-grid-migrated"
+            data-test-subj="body-data-grid"
             aria-label={DATA_TABLE_ARIA_LABEL}
             columns={isEventRenderedView ? columnHeaders : columnsWithCellActions}
             columnVisibility={{ visibleColumns, setVisibleColumns: onSetVisibleColumns }}
