@@ -6,8 +6,12 @@
  * Side Public License, v 1.
  */
 
+export { getEventIdToDataMapping } from './data_table/helpers';
+
 export type { DataTableProps } from './data_table';
 
 export { DataTableComponent } from './data_table';
 
 export { dataTableReducer } from './store/reducer';
+
+export { createDataTableLocalStorageEpic } from './store/epic_local_storage';

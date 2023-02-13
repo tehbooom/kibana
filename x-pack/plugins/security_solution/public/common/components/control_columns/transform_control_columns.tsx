@@ -10,6 +10,8 @@ import type { EuiDataGridCellValueElementProps, EuiDataGridControlColumn } from 
 import type { ComponentType } from 'react';
 import React from 'react';
 import type { EuiTheme } from '@kbn/kibana-react-plugin/common';
+import { getPageRowIndex } from '@kbn/securitysolution-data-table/data_table/pagination';
+import { addBuildingBlockStyle } from '@kbn/securitysolution-data-table/data_table/helpers';
 import type {
   BrowserFields,
   TimelineItem,
@@ -24,8 +26,6 @@ import type {
   OnSelectAll,
   SortColumnTable,
 } from '../../../../common/types';
-import { addBuildingBlockStyle } from '../data_table/helpers';
-import { getPageRowIndex } from '../data_table/pagination';
 import { RowAction } from './row_action';
 
 const EmptyHeaderCellRender: ComponentType = () => null;

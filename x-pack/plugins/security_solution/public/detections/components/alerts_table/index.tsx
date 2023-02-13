@@ -15,6 +15,8 @@ import type { Filter } from '@kbn/es-query';
 import { buildEsQuery } from '@kbn/es-query';
 import { getEsQueryConfig } from '@kbn/data-plugin/common';
 import { Storage } from '@kbn/kibana-utils-plugin/public';
+import { dataTableActions, dataTableSelectors } from '@kbn/securitysolution-data-table/store';
+import { tableDefaults } from '@kbn/securitysolution-data-table/store/defaults';
 import { InspectButton } from '../../../common/components/inspect';
 import { defaultUnit } from '../../../common/components/toolbar/unit';
 import type {
@@ -32,8 +34,6 @@ import { useGlobalTime } from '../../../common/containers/use_global_time';
 import { combineQueries } from '../../../common/lib/kuery';
 import type { AlertWorkflowStatus } from '../../../common/types';
 import type { TableIdLiteral } from '../../../../common/types';
-import { tableDefaults } from '../../../common/store/data_table/defaults';
-import { dataTableActions, dataTableSelectors } from '../../../common/store/data_table';
 import type { Status } from '../../../../common/detection_engine/schemas/common/schemas';
 import { StatefulEventsViewer } from '../../../common/components/events_viewer';
 import { useSourcererDataView } from '../../../common/containers/sourcerer';

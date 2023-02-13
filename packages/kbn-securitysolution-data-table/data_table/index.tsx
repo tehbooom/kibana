@@ -25,7 +25,10 @@ import { useDispatch } from 'react-redux';
 import styled, { ThemeContext } from 'styled-components';
 import type { Filter } from '@kbn/es-query';
 import type { EuiTheme } from '@kbn/kibana-react-plugin/common';
-import type { FieldBrowserOptions } from '@kbn/triggers-actions-ui-plugin/public';
+import type {
+  FieldBrowserOptions,
+  TriggersAndActionsUIPublicPluginStart,
+} from '@kbn/triggers-actions-ui-plugin/public';
 import { i18n } from '@kbn/i18n';
 import { BrowserFields, TimelineItem } from '@kbn/timelines-plugin/common';
 import type { BulkActionsProp, DataTableCellAction } from '../types';
@@ -52,6 +55,7 @@ const DATA_TABLE_ARIA_LABEL = i18n.translate('xpack.securitySolution.dataTable.a
   defaultMessage: 'Alerts',
 });
 
+// TODO support predefined categories for field selector
 export interface DataTableProps {
   additionalControls?: React.ReactNode;
   browserFields: BrowserFields;
@@ -72,8 +76,7 @@ export interface DataTableProps {
   totalItems: number;
   rowHeightsOptions?: EuiDataGridRowHeightsOptions;
   isEventRenderedView?: boolean;
-  // TODO add strong typing
-  getFieldBrowser: (...params: unknown[]) => any;
+  getFieldBrowser: TriggersAndActionsUIPublicPluginStart['getFieldBrowser'];
 }
 
 const ES_LIMIT_COUNT = 9999;

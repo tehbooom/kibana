@@ -11,6 +11,7 @@ import { isEmpty } from 'lodash/fp';
 import type { EuiDataGridCellValueElementProps } from '@elastic/eui';
 import type { EuiTheme } from '@kbn/kibana-react-plugin/common';
 import type { EcsSecurityExtension as Ecs } from '@kbn/securitysolution-ecs';
+import { TimelineItem, TimelineNonEcsData } from '@kbn/timelines-plugin/common';
 import type { SortColumnTable } from '../types';
 import type { ColumnHeaderOptions, SortDirection } from '../types';
 
@@ -88,3 +89,27 @@ export const hasCellActions = ({
   columnId: string;
   disabledCellActions: string[];
 }) => !disabledCellActions.includes(columnId);
+
+/**
+ * Creates mapping of eventID -> fieldData for given fieldsToKeep. Used to store additional field
+ * data necessary for custom timeline actions in conjunction with selection state
+ * @param data
+ * @param eventIds
+ * @param fieldsToKeep
+ */
+export const getEventIdToDataMapping = (
+  timelineData: TimelineItem[],
+  eventIds: string[],
+  fieldsToKeep: string[],
+  hasAlertsCrud: boolean
+): Record<string, TimelineNonEcsData[]> =>
+  timelineData.reduce((acc, v) => {
+    const fvm =
+      hasAlertsCrud && eventIds.includes(v._id)
+        ? { [v._id]: v.data.filter((ti) => fieldsToKeep.includes(ti.field)) }
+        : {};
+    return {
+      ...acc,
+      ...fvm,
+    };
+  }, {});

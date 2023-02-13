@@ -12,7 +12,6 @@ import type { Epic } from 'redux-observable';
 import { get } from 'lodash/fp';
 
 import type { TableIdLiteral } from '../types';
-import { addTableInStorage } from '../../../timelines/containers/local_storage';
 
 import {
   removeColumn,
@@ -24,7 +23,7 @@ import {
   updateItemsPerPage,
   updateSort,
 } from './actions';
-import type { TimelineEpicDependencies } from '../../../timelines/store/timeline/types';
+import { addTableInStorage } from '../local_storage';
 
 export const isNotNull = <T>(value: T | null): value is T => value !== null;
 
@@ -39,14 +38,15 @@ const tableActionTypes = [
   updateSort.type,
 ];
 
+// TODO strong type this
 export const createDataTableLocalStorageEpic =
-  <State>(): Epic<Action, Action, State, TimelineEpicDependencies<State>> =>
+  <State>(): Epic<Action, Action, State, any> =>
   (action$, state$, { tableByIdSelector, storage }) => {
     const table$ = state$.pipe(map(tableByIdSelector), filter(isNotNull));
     return action$.pipe(
       delay(500),
       withLatestFrom(table$),
-      tap(([action, tableById]) => {
+      tap(([action, tableById]: any) => {
         if (tableActionTypes.includes(action.type)) {
           if (storage) {
             const tableId: TableIdLiteral = get('payload.id', action);

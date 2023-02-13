@@ -161,3 +161,5 @@ export interface StartedSubPlugins {
   cloudSecurityPosture: ReturnType<CloudSecurityPosture['start']>;
   threatIntelligence: ReturnType<ThreatIntelligence['start']>;
 }
+
+export type { TimelineEpicDependencies } from './timelines/store/timeline/types';

@@ -1,16 +1,16 @@
 /*
  * Copyright Elasticsearch B.V. and/or licensed to Elasticsearch B.V. under one
  * or more contributor license agreements. Licensed under the Elastic License
- * 2.0; you may not use this file except in compliance with the Elastic License
- * 2.0.
+ * 2.0 and the Server Side Public License, v 1; you may not use this file except
+ * in compliance with, at your election, the Elastic License 2.0 or the Server
+ * Side Public License, v 1.
  */
 
 import { isEmpty } from 'lodash/fp';
 import type { Storage } from '@kbn/kibana-utils-plugin/public';
-import type { DataTableModel } from '@kbn/securitysolution-data-table/store/model';
-import type { ColumnHeaderOptions, TableIdLiteral } from '../../../../common/types';
+import type { DataTableModel } from '../store/model';
+import type { ColumnHeaderOptions, TableIdLiteral } from '../types';
 import type { DataTablesStorage } from './types';
-import { useKibana } from '../../../common/lib/kibana';
 
 export const LOCAL_STORAGE_TABLE_KEY = 'securityDataTable';
 const LOCAL_STORAGE_TIMELINE_KEY_LEGACY = 'timelines';
@@ -21,7 +21,6 @@ const EMPTY_TABLE = {} as {
 /**
  * Migrates the values of the data table from the legacy timelines key to the securityDataTable key
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const migrateLegacyTimelinesToSecurityDataTable = (legacyTimelineTables: any) => {
   if (!legacyTimelineTables) {
     return EMPTY_TABLE;
@@ -156,9 +155,7 @@ const getSerializingTableToStore = (table: DataTableModel) => {
   return tableToStore;
 };
 
-export const useDataTablesStorage = (): DataTablesStorage => {
-  const { storage } = useKibana().services;
-
+export const useDataTablesStorage = (storage: Storage): DataTablesStorage => {
   const getAllDataTables: DataTablesStorage['getAllDataTables'] = () =>
     getAllDataTablesInStorage(storage);
 

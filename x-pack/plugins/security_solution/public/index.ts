@@ -14,3 +14,5 @@ export const plugin = (context: PluginInitializerContext): Plugin => new Plugin(
 
 export type { PluginSetup };
 export { Plugin };
+
+export type { TimelineEpicDependencies } from './types';

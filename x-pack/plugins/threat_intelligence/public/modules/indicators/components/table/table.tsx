@@ -7,7 +7,6 @@
 
 import React, { useMemo, useState, VFC } from 'react';
 import {
-  EuiDataGrid,
   EuiDataGridColumnCellActionProps,
   EuiFlexGroup,
   EuiFlexItem,
@@ -22,6 +21,8 @@ import {
   EuiDataGridColumn,
   EuiDataGridRowHeightsOptions,
 } from '@elastic/eui/src/components/datagrid/data_grid_types';
+import { DataTableComponent } from '@kbn/securitysolution-data-table';
+import { TimelineItem } from '@kbn/timelines-plugin/common';
 import { CellActions, cellPopoverRendererFactory, cellRendererFactory } from './components';
 import { BrowserFields, SecuritySolutionDataViewBase } from '../../../../types';
 import { Indicator, RawIndicatorFieldId } from '../../../../../common/types/indicator';
@@ -29,7 +30,7 @@ import { EmptyState } from '../../../../components/empty_state';
 import { IndicatorsTableContext, IndicatorsTableContextValue } from './contexts';
 import { IndicatorsFlyout } from '../flyout';
 import { ColumnSettingsValue, useToolbarOptions } from './hooks';
-import { useFieldTypes } from '../../../../hooks';
+import { useFieldTypes, useKibana } from '../../../../hooks';
 import { getFieldSchema } from '../../utils';
 import { Pagination } from '../../services';
 import { TABLE_TEST_ID, TABLE_UPDATE_PROGRESS_TEST_ID } from './test_ids';
@@ -68,6 +69,8 @@ export const IndicatorsTable: VFC<IndicatorsTableProps> = ({
   browserFields,
   columnSettings: { columns, columnVisibility, handleResetColumns, handleToggleColumn, sorting },
 }) => {
+  const { triggersActionsUi } = useKibana().services;
+
   const [expanded, setExpanded] = useState<Indicator>();
 
   const fieldTypes = useFieldTypes();
@@ -181,24 +184,23 @@ export const IndicatorsTable: VFC<IndicatorsTableProps> = ({
         )}
         <EuiSpacer size="xs" />
 
-        <EuiDataGrid
-          aria-labelledby="indicators-table"
+        <DataTableComponent
+          browserFields={browserFields}
+          data={indicators as unknown as TimelineItem[]}
+          loadPage={onChangePage}
+          disabledCellActions={[]}
+          id={TABLE_TEST_ID}
           leadingControlColumns={leadingControlColumns}
-          rowCount={indicatorCount}
           renderCellValue={renderCellValue}
-          renderCellPopover={renderCellPopoverValue}
-          toolbarVisibility={toolbarOptions}
+          rowRenderers={[]}
+          unitCountText={'unitCountText'}
           pagination={{
             ...pagination,
             onChangeItemsPerPage,
             onChangePage,
           }}
-          gridStyle={gridStyle}
-          data-test-subj={TABLE_TEST_ID}
-          sorting={sorting}
-          columnVisibility={columnVisibility}
-          columns={mappedColumns}
-          rowHeightsOptions={rowHeightsOptions}
+          totalItems={indicatorCount}
+          getFieldBrowser={triggersActionsUi.getFieldBrowser}
         />
       </>
     );
@@ -208,14 +210,12 @@ export const IndicatorsTable: VFC<IndicatorsTableProps> = ({
     isFetching,
     leadingControlColumns,
     renderCellValue,
-    renderCellPopoverValue,
-    toolbarOptions,
     pagination,
     onChangeItemsPerPage,
     onChangePage,
-    sorting,
-    columnVisibility,
-    mappedColumns,
+    browserFields,
+    indicators,
+    triggersActionsUi.getFieldBrowser,
   ]);
 
   return (
