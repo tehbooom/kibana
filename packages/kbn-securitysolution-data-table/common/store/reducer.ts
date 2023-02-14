@@ -1,15 +1,16 @@
 /*
  * Copyright Elasticsearch B.V. and/or licensed to Elasticsearch B.V. under one
  * or more contributor license agreements. Licensed under the Elastic License
- * 2.0; you may not use this file except in compliance with the Elastic License
- * 2.0.
+ * 2.0 and the Server Side Public License, v 1; you may not use this file except
+ * in compliance with, at your election, the Elastic License 2.0 or the Server
+ * Side Public License, v 1.
  */
 
 import type { AnyAction, Reducer } from 'redux';
 import { combineReducers } from 'redux';
 
-import { dataTableReducer } from '@kbn/securitysolution-data-table';
-import type { DataTableState } from '@kbn/securitysolution-data-table/store/types';
+import { dataTableReducer } from '../..';
+import type { DataTableState } from '../../store/types';
 import { appReducer, initialAppState } from './app';
 import { dragAndDropReducer, initialDragAndDropState } from './drag_and_drop';
 import { createInitialInputsState, inputsReducer } from './inputs';
