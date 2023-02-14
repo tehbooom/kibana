@@ -16,3 +16,5 @@ export type { PluginSetup };
 export { Plugin };
 
 export type { TimelineEpicDependencies } from './types';
+
+export { defaultRowRenderers } from './timelines/components/timeline/body/renderers';

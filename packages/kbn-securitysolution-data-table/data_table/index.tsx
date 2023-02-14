@@ -50,6 +50,8 @@ import { tableDefaults } from '../store/defaults';
 import { REMOVE_COLUMN } from './column_headers/translations';
 import { getPageRowIndex } from './pagination';
 import { useShallowEqualSelector } from '../hooks/use_selector';
+import { DefaultCellRenderer } from '../cell_rendering/default_cell_renderer';
+import { defaultRowRenderers } from '../body/renderers';
 
 const DATA_TABLE_ARIA_LABEL = i18n.translate('xpack.securitySolution.dataTable.ariaLabel', {
   defaultMessage: 'Alerts',
@@ -68,8 +70,8 @@ export interface DataTableProps {
   id: string;
   leadingControlColumns: EuiDataGridControlColumn[];
   loadPage: (newActivePage: number) => void;
-  renderCellValue: (props: CellValueElementProps) => React.ReactNode;
-  rowRenderers: RowRenderer[];
+  renderCellValue?: (props: CellValueElementProps) => React.ReactNode;
+  rowRenderers?: RowRenderer[];
   hasCrudPermissions?: boolean;
   unitCountText: string;
   pagination: EuiDataGridPaginationProps;
@@ -127,8 +129,8 @@ export const DataTableComponent = React.memo<DataTableProps>(
     id,
     leadingControlColumns,
     loadPage,
-    renderCellValue,
-    rowRenderers,
+    renderCellValue = DefaultCellRenderer,
+    rowRenderers = defaultRowRenderers,
     pagination,
     unitCountText,
     totalItems,

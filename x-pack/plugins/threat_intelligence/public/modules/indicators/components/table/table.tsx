@@ -191,8 +191,6 @@ export const IndicatorsTable: VFC<IndicatorsTableProps> = ({
           disabledCellActions={[]}
           id={TABLE_TEST_ID}
           leadingControlColumns={leadingControlColumns}
-          renderCellValue={renderCellValue}
-          rowRenderers={[]}
           unitCountText={'unitCountText'}
           pagination={{
             ...pagination,
@@ -209,7 +207,6 @@ export const IndicatorsTable: VFC<IndicatorsTableProps> = ({
     indicatorCount,
     isFetching,
     leadingControlColumns,
-    renderCellValue,
     pagination,
     onChangeItemsPerPage,
     onChangePage,
