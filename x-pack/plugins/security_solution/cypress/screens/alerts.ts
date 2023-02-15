@@ -134,3 +134,5 @@ export const EVENT_CONTAINER_TABLE_LOADING = '[data-test-subj="events-container-
 
 export const EVENT_CONTAINER_TABLE_NOT_LOADING =
   '[data-test-subj="events-container-loading-false"]';
+
+export const TREND_CHART_LEGEND = '[data-test-subj="draggable-legend"]';
